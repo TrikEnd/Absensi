@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Absensi Praktikum</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 350px;
+        }
+        h2 {
+            text-align: center;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 8px;
+            margin: 6px 0;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .error { color: red; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Form Absensi</h2>
+        <form id="absenForm" method="POST" action="simpan.php">
+            <label>NIM:</label>
+            <input type="text" name="nim" id="nim" maxlength="10" required>
+            <div id="nimError" class="error"></div>
+
+            <label>Nama:</label>
+            <input type="text" name="nama" id="nama" required>
+            <div id="namaError" class="error"></div>
+
+            <label>Tanggal:</label>
+            <input type="date" name="tanggal" id="tanggal" required>
+
+            <label>Status Hadir:</label>
+            <select name="hadir" id="hadir" required>
+                <option value="Hadir">Hadir</option>
+                <option value="Tidak Hadir">Tidak Hadir</option>
+            </select>
+
+            <button type="submit">Simpan Absensi</button>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('absenForm');
+        form.addEventListener('submit', function(e) {
+            let valid = true;
+
+            const nim = document.getElementById('nim').value;
+            const nama = document.getElementById('nama').value;
+
+            document.getElementById('nimError').innerText = '';
+            document.getElementById('namaError').innerText = '';
+
+            if (!/^\d{10}$/.test(nim)) {
+                document.getElementById('nimError').innerText = 'NIM harus 10 digit angka';
+                valid = false;
+            }
+
+            if (nama.trim() === '') {
+                document.getElementById('namaError').innerText = 'Nama tidak boleh kosong';
+                valid = false;
+            }
+
+            if (!valid) e.preventDefault();
+        });
+    </script>
+</body>
+</html>
